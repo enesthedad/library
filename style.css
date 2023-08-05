@@ -1,0 +1,196 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Ubuntu', sans-serif;
+}
+body{
+    background-color:	#eeeeee;
+}
+.container{
+    overflow: auto; /* Use "auto" to add scrollbars when necessary */
+    max-height: 100vh; /* Set a maximum height for the container */
+    display: grid;
+    grid-template: max-content minmax(calc(100vh),1fr);
+}
+.header{
+    grid-area: 1 1 2 2;
+    display: grid;
+    gap: 600px;
+    justify-content: center;
+    align-items: center;
+    background-color: 	#5587f9;
+}
+.logo{
+    color:ghostwhite;
+    padding: 20px;
+    font-size: 48px;
+    font-weight: 600;
+}
+.body{
+    grid-area:2 1 4 2   ;
+    background-color: 	#eeeeee;
+    display: grid;
+    grid-template-rows: max-content calc(100vh);
+    justify-content: center ;
+}
+.btn-container{
+    padding-top: 50px;
+    grid-area: 1 2;
+    display: grid;
+    justify-content: center;
+    padding: 30px;
+}
+button{
+    background-color:#9cc439;
+    font-size: 24px;
+    padding: 12px;
+    border-radius: 8px;
+    border:none;
+}
+.book-container{
+    
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    gap:30px;   
+    grid-auto-rows: max-content;
+}
+
+  
+.added-div {
+    width: 300px;
+    height: 300px;
+    background-color:white;
+    border: 1px solid #aaa;
+    padding: 10px;
+    margin: 30px 0;
+    display: grid;
+
+    border-radius: 10px;
+    box-shadow: 0 0 20px grey;
+    grid-template-rows: 1fr 1fr 1fr 1fr max-content;
+}
+.added-div:hover {
+    box-shadow: 0 0 35px black;
+}
+.remove{
+    position: relative;
+    
+    cursor: pointer;
+    width: 125px;   
+    padding: 10px;
+    background-color: #fa4345;
+}
+.outside-container{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+.form-container{
+    padding-top: 50px;
+    width: 600px;
+    height: 600px;
+    background-color:#5587f9;
+    display: grid;
+    grid-template-rows: repeat(5,50px);
+    gap: 20px;
+    justify-content: center; 
+    border-radius: 30px;
+    color:#eee;
+    box-shadow: 0 0 300px #111;
+    z-index: 3;
+}
+.row-container{
+    display: grid;
+    grid-template-rows: max-content max-content;
+}
+.check-container input{
+    margin-left: 30px;
+}
+.form-container label,input{
+    font-size: 24px;
+}
+
+.form-container button{
+    color:white;
+    background-color:#9cc439;
+    font-size: 24px;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+}
+.button-container{
+    display: grid;
+    justify-content: center;
+}
+.read-toggle{
+    position: relative;
+    
+    cursor: pointer;
+    width: 125px;   
+    padding: 10px;
+    background-color: #9cc439;
+    margin-bottom: 10px;
+}
+.read{
+    background-color:  #f6a200;
+}
+.not-read{
+    background-color: green  ;
+}
+
+
+
+
+.mini-container{
+    font-size: 24px;
+    width: 400px;
+    height: 300px;
+    background-color: cadetblue;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    grid-template-rows: 1fr max-content ;
+    border-radius: 15px;
+}
+.submit{
+    display: grid;
+    grid-template-columns: max-content max-content;
+    align-items: start;
+    padding: 10px;
+gap: 15px;
+    margin-top: 10px;
+}
+.submit button{
+    font-size:18px ;
+    padding: 8px;
+    border-radius: 8px;
+    border: none;
+}
+.outbox{
+    position:absolute;
+    top: 0;
+    left: 40%;
+    height: 100vh;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+}
+.blurry-container{
+    position: absolute;
+    top: 0;
+    background-color: rgba(3, 3, 3, 0.9);
+    width: 100%;
+    height: 100vh;
+}
+
+
+.hidden{
+    display: none;
+}
