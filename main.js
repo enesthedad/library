@@ -10,54 +10,38 @@ const blurryContainer=document.querySelector('.blurry-container');
 const outBox = document.querySelector('.outbox');
 const agree  = document.getElementById('agree');
 const disagree = document.getElementById('disagree');
+const closeBtn=document.querySelector('.decline');
+const myLibrary=['Harry Potter 1-J.K Rowling-852-true','A Little Life-Hanya Yanagihara-832-false','Verity-Colleen Hoover-336-false','The 48 Laws of Power-Robert Greene-452-true'];
+let objLibrary=[];
 addBtn.addEventListener('click', function() {
       addContainer.classList.remove('hidden')
-     
+
       
 });
-addBook.addEventListener('click',function(){
-    let idClone = Date.now();
-    console.log((idClone));
-    let newDiv = document.createElement('div');
-    newDiv.className = 'added-div';
-    newDiv.innerHTML=
-    `
-    <p>Book Name: ${bookName.value}</p>
-    <p>Book Author: ${bookAuthor.value}</p>
-    <p>Book Page: ${bookPage.value}</p>
-    <p class='status' id='${idClone}'>Book Status: ${isRead()}</p>
-    <div class='btn-container'>
-    
-    <button class='read-toggle ${readClass()}'>${toggleBtn()}</button>
-    <button class='remove'>Remove</button>
-    </div>
-    `
-    if(bookName.value!=''&&bookAuthor.value!=''&&bookPage.value!=''){
-        newDiv.setAttribute('id',idClone);
-        bookContainer.appendChild(newDiv);
-        const removeBtns = document.querySelectorAll('.remove');
-        removeBtns.forEach((btn)=>btn.addEventListener('click',removeDiv));
-        const readBtns=document.querySelectorAll('.read-toggle');
-        readBtns.forEach((btn)=>btn.addEventListener('click', targetEl));
-        addContainer.classList.add('hidden');
-        bookName.value='';
-        bookAuthor.value='';
-        bookPage.value='';
-        console.log(bookRead.value);
-    }else{
-       
-    }
-   
+closeBtn.addEventListener('click',function(){
+    addContainer.classList.add('hidden');
+    bookName.value='';
+    bookPage.value='';
+    bookAuthor.value='';
+    bookRead.checked=false;
 
 })
-
+addBook.addEventListener('click',function(){
+    const newBook = new Book(bookName.value,bookAuthor.value,bookPage.value,String(bookRead.checked),randomNumGen());
+    objLibrary.push(newBook);
+    bookVisualize(newBook);})
+const randomNumGen = function(){
+    return Math.trunc(Math.random()*9999999999);
+}
 const removeDiv = function(e){
     blurryContainer.classList.remove('hidden');
     outBox.classList.remove('hidden');
     agree.addEventListener('click',function(){
-        e.target.parentElement.parentElement.remove();
         blurryContainer.classList.add('hidden');
         outBox.classList.add('hidden');
+        const index = objLibrary.findIndex((obj=>obj.id==e.target.parentElement.parentElement.firstChild.id));
+        objLibrary.splice(index,1);
+        e.target.parentElement.parentElement.remove();
     })
     disagree.addEventListener('click',function(){
        
@@ -65,23 +49,17 @@ const removeDiv = function(e){
         outBox.classList.add('hidden');
     })
 }
-const readClass=function(){
-    if(bookRead.checked==true){
+const readClass=function(value){
+    if(value=='true'){
         return `read`
     }else{
         return `not-read`
     }
 }
-const isRead = function(){
-    if(bookRead.checked==true){
-        return `Read`;
-    }else{
-        return `Not Read`;
-    }
-}
-const toggleBtn=function(){
-    if(bookRead.checked==true){
-        return `Not Read`;
+
+const toggleBtn=function(value){
+    if(value=='true'){
+        return`Not Read` ;
     }else{
         return `Read`;
     }
@@ -89,6 +67,7 @@ const toggleBtn=function(){
 const targetEl = function(e){
     
     const readStat = e.target.parentElement.parentElement.querySelector('.status');
+    console.log(readStat.innerHTML.slice(13));
     if(readStat.innerHTML.slice(13)=='Read'){
         e.target.innerHTML=`Read`
         e.target.classList.remove('read');
@@ -101,3 +80,59 @@ const targetEl = function(e){
         readStat.innerHTML=`Book Status: Read`;
 }
 };
+function Book(bookName,author,page,read,id){
+    this.bookName=bookName;
+    this.author=author;
+    this.page=page;
+    this.read=read;
+    this.id=id;
+    this.readStatus=function(){
+        if(this.read=='true'){
+            return `Read`;
+        }else{
+            return `Not Read`;
+        }
+    }
+}
+function addBookToLibrary(str){
+    let book1=str.split('-');
+    let bookObjCreate={};
+    bookObjCreate=new Book(book1[0],book1[1],book1[2],book1[3],randomNumGen());
+    objLibrary.push(bookObjCreate);
+    bookObjCreate={};
+
+}
+
+myLibrary.forEach((book)=>{
+    addBookToLibrary(book);
+})
+function bookVisualize(book){
+        let newDiv = document.createElement('div');
+        newDiv.className = 'added-div';
+        newDiv.innerHTML=`<p id=${book.id}>Book Name: ${book.bookName}</p>
+        <p>Book Author: ${book.author}</p>
+        <p>Book Page: ${book.page}</p>
+        <p class='status'>Book Status: ${book.readStatus()}</p>
+        <div class='btn-container'>
+        <button class='read-toggle ${readClass(book.read)}'>${toggleBtn(book.read)}</button>
+        <button class='remove'>Remove</button>
+        </div>
+        `
+          
+        if(book.bookName!=''&&book.author!=''&&book.page!=''){
+            bookContainer.appendChild(newDiv);
+            const removeBtns = document.querySelectorAll('.remove');
+            removeBtns.forEach((btn)=>btn.addEventListener('click',removeDiv));
+            const readBtns=document.querySelectorAll('.read-toggle');
+            readBtns.forEach((btn)=>btn.addEventListener('click', targetEl));
+            addContainer.classList.add('hidden');
+            bookName.value='';
+            bookAuthor.value='';
+            bookPage.value='';
+            bookRead.checked=false;
+        }else{
+           
+        }
+}
+console.log(String(false));
+objLibrary.forEach((book)=>bookVisualize(book));
